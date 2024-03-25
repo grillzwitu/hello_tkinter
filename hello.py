@@ -1,7 +1,11 @@
 from tkinter import *
+from PIL import ImageTk, Image
 
-# Initializing the app.
+# Initializing the app/window/interface.
 root = Tk()
+
+# Change the window title
+root.title("Hello Tkinter")
 
 #Creating label Widgets
 myLabel1 = Label(root, text="Hello Tkinter")
@@ -32,7 +36,18 @@ myButton1.grid(row=3, column=1)
 input1.grid(row=2, column=1)
 
 
+#Images, Icons and Exits buttons
 
+# add/change window icon
+root.iconbitmap("./assets/icons/currency_exchange_finance_coins_money_usd_dollar_icon_262507.ico")
 
+#create an exit button
+btn_exit = Button(root, text="Exit", command=root.quit)
+btn_exit.grid(row=7, column=1)
+
+#Images
+img1 = ImageTk.PhotoImage(Image.open("./assets/images/apple_pic.jpg"))
+img_label = Label(image=img1)
+img_label.grid(row=5, column=1)
 
 root.mainloop()
