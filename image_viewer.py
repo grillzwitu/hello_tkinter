@@ -17,37 +17,67 @@ display.grid(row=0, column=0, columnspan=3)
 
 #Helper functions
 
-def next() -> None:
+def next(img_num) -> None:
     """
     Handles clicking the forward button
     """
 
-    global my_display
-    global fwd_btn
-    global bck_btn
+    global display
+    global forward_btn
+    global back_btn
 
-    display.grid_forget()
+    display.grid_forget() # remove the current display/image
+
+    display = Label(image= img_list[img_num-1]) # display new image
+
+    # next and previous logic
+    forward_btn = Button(window, text=">>", padx=15, command= lambda: next(img_num + 1))
+    back_btn = Button(window, text="<<", padx=15, command= lambda: previous(img_num - 1))
+
+    #handle what happens at last image
+    if img_num == len(img_list):
+        forward_btn = Button(window, text=">>", padx=15, state=DISABLED)
+    
+    # Add to the app
+    display.grid(row=0, column=0, columnspan=3)
+    back_btn.grid(row=1, column=0)
+    forward_btn.grid(row=1, column=2)
 
 
-def previous() -> None:
+def previous(img_num) -> None:
     """
     Handles clicking the back button
     """
 
     global display
-    global fwd_btn
-    global bck_btn
+    global forward_btn
+    global back_btn
 
     display.grid_forget()
 
+    display = Label(image= img_list[img_num-1]) # display new image
 
-back_btn = Button(window, text="<<", padx=15, command= lambda: next())
-back_btn.grid(row=1, column=0,)
+    # next and previous logic
+    forward_btn = Button(window, text=">>", padx=15, command= lambda: next(img_num + 1))
+    back_btn = Button(window, text="<<", padx=15, command= lambda: previous(img_num - 1))
 
-forward_btn = Button(window, text=">>", padx=15, command= lambda: previous())
+    #handle what happens at last image
+    if img_num == 1:
+        back_btn = Button(window, text="<<", padx=15, state=DISABLED)
+    
+    # Add to the app
+    display.grid(row=0, column=0, columnspan=3)
+    back_btn.grid(row=1, column=0)
+    forward_btn.grid(row=1, column=2)
+
+
+back_btn = Button(window, text="<<", padx=15, command= lambda: previous(), state=DISABLED)
+back_btn.grid(row=1, column=0)
+
+forward_btn = Button(window, text=">>", padx=15, command= lambda: next(2))
 forward_btn.grid(row=1, column=2)
 
-
+#the close button
 exit_btn = Button(window, text="Close", command=window.quit)
 exit_btn.grid(row=3, column=1)
 
