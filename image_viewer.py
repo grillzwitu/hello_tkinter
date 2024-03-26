@@ -15,6 +15,9 @@ img_list = [img_1, img_2, img_3, img_4, img_5]
 display = Label(image=img_1)
 display.grid(row=0, column=0, columnspan=3)
 
+status = Label(window, text="Image 1 of " + str(len(img_list)), bd=1, relief=SUNKEN)
+status.grid(row=3, column=0, columnspan=3)
+
 #Helper functions
 
 def next(img_num) -> None:
@@ -78,8 +81,8 @@ forward_btn = Button(window, text=">>", padx=15, command= lambda: next(2))
 forward_btn.grid(row=1, column=2)
 
 #the close button
-exit_btn = Button(window, text="Close", command=window.quit)
-exit_btn.grid(row=3, column=1)
+exit_btn = Button(window, text="Close", pady=15, command=window.quit)
+exit_btn.grid(row=2, column=1)
 
 
 window.mainloop()
