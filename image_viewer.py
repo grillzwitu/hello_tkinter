@@ -15,8 +15,8 @@ img_list = [img_1, img_2, img_3, img_4, img_5]
 display = Label(image=img_1)
 display.grid(row=0, column=0, columnspan=3)
 
-status = Label(window, text="Image 1 of " + str(len(img_list)), bd=1, relief=SUNKEN)
-status.grid(row=3, column=0, columnspan=3)
+status = Label(window, text="Image 1 of " + str(len(img_list)), bd=1, relief=SUNKEN, padx=5, anchor=E)
+status.grid(row=3, column=0, columnspan=3, sticky=W+E)
 
 #Helper functions
 
@@ -43,8 +43,12 @@ def next(img_num) -> None:
     
     # Add to the app
     display.grid(row=0, column=0, columnspan=3)
-    back_btn.grid(row=1, column=0)
-    forward_btn.grid(row=1, column=2)
+    back_btn.grid(row=1, column=0, pady=5)
+    forward_btn.grid(row=1, column=2, pady=5)
+
+    #update the status bar dynamically
+    status = Label(window, text="Image " + str(img_num) + " of " + str(len(img_list)), bd=1, relief=SUNKEN, padx=5, anchor=E)
+    status.grid(row=3, column=0, columnspan=3, sticky=W+E)
 
 
 def previous(img_num) -> None:
@@ -70,19 +74,23 @@ def previous(img_num) -> None:
     
     # Add to the app
     display.grid(row=0, column=0, columnspan=3)
-    back_btn.grid(row=1, column=0)
-    forward_btn.grid(row=1, column=2)
+    back_btn.grid(row=1, column=0, pady=5)
+    forward_btn.grid(row=1, column=2, pady=5)
+
+    #update the status bar dynamically
+    status = Label(window, text="Image " + str(img_num) + " of " + str(len(img_list)), bd=1, relief=SUNKEN, padx=5, anchor=E)
+    status.grid(row=3, column=0, columnspan=3, sticky=W+E)
 
 
 back_btn = Button(window, text="<<", padx=15, command= lambda: previous(), state=DISABLED)
-back_btn.grid(row=1, column=0)
+back_btn.grid(row=1, column=0, pady=5)
 
 forward_btn = Button(window, text=">>", padx=15, command= lambda: next(2))
-forward_btn.grid(row=1, column=2)
+forward_btn.grid(row=1, column=2, pady=5)
 
 #the close button
-exit_btn = Button(window, text="Close", pady=15, command=window.quit)
-exit_btn.grid(row=2, column=1)
+exit_btn = Button(window, text="Close", command=window.quit)
+exit_btn.grid(row=2, column=1, pady=15)
 
 
 window.mainloop()
