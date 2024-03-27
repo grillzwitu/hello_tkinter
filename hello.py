@@ -60,7 +60,7 @@ frm_btn.grid(row=0, column=0)
 
 #Radio Button
 
-treat_select = StringVar(value="None")
+treat_select = StringVar(value="None") #defining a variable for the group of radio buttons
 
 def  selected(value):
     """
@@ -73,12 +73,13 @@ def  selected(value):
     selection = Label(frame, text=value)
     selection.grid(row=3, column=1)
 
+#creating the buttons and displaying them in a frame
 rdio_btn1 = Radiobutton(frame, text="cake", variable=treat_select, value="cake", command= lambda: selected(treat_select.get()))
 rdio_btn2 = Radiobutton(frame, text="cookie", variable=treat_select, value="cookie", command= lambda: selected(treat_select.get()))
 rdio_btn1.grid(row=1, column=1)
 rdio_btn2.grid(row=2, column=1)
 
-
+# Display the radio button selection
 selection = Label(frame)
 selection.grid(row=3, column=1)
 
