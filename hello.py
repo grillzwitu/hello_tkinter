@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
+from tkinter import messagebox
 
 # Initializing the app/window/interface.
 root = Tk()
@@ -14,7 +15,10 @@ myLabel3 = Label(root, text="It's Label widgets here")
 
 #simple click function
 
-def click() :  
+def click() :
+    """
+    Implements the click action of a button
+    """
     clickLabel = Label(root, text=input1.get())
     clickLabel.grid(row=4, column=1)
 
@@ -64,12 +68,13 @@ treat_select = StringVar(value="None") #defining a variable for the group of rad
 
 def  selected(value):
     """
-    Faciclitates the selection of a radio button
+    Implements the selection of a radio button
     """
     global selection
 
-    selection.grid_forget()
+    selection.grid_forget() #clear any current selection
 
+    # Display the selection
     selection = Label(frame, text=value)
     selection.grid(row=3, column=1)
 
@@ -82,5 +87,47 @@ rdio_btn2.grid(row=2, column=1)
 # Display the radio button selection
 selection = Label(frame)
 selection.grid(row=3, column=1)
+
+# Alternative approach to craeting radio buttons.
+
+BREAKFAST_LIST = [
+    ("Okpa", "Okpa"),
+    ("Ewa-goin", "Ewa-goin"),
+    ("Fruit-salad", "Fuit-salad")
+]
+
+breakfast = StringVar(value="None") #the variable for the radio buttons
+
+#creating the buttons
+
+row_pos: int = 4
+
+for key, val in BREAKFAST_LIST:
+    Radiobutton(frame, text=key, variable=breakfast, value=val, command= lambda: selected(breakfast.get())).grid(row=row_pos, column=1)
+    row_pos += 1
+
+
+# Message Box
+    
+def pop_mb() -> None:
+    """
+    Implements the opening the message box 
+    """
+
+#    messagebox.showinfo(title="Info Message box", message="You wanted to see a message box")
+    decision = messagebox.askyesnocancel(title="Simple yes or no message box", message="Say yes or no") #stored in a variable because it requires further action
+
+    # print(type(decision))
+
+    if decision == 1:
+        your_answer = Label(root, text="You clicked Yes").grid(row=8, column=1)
+    elif decision == 0:
+        your_answer = Label(root, text="You clicked No").grid(row=8, column=1)
+    else:
+        return
+
+    
+prompt_btn = Button(root, text="Pop the message box", command=pop_mb).grid(row=7, column=1)
+
 
 root.mainloop()
