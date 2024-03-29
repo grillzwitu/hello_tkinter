@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
+from tkinter import filedialog
 
 # Initializing the app/window/interface.
 root = Tk()
@@ -47,7 +48,7 @@ root.iconbitmap("./assets/icons/currency_exchange_finance_coins_money_usd_dollar
 
 #create an exit button
 btn_exit = Button(root, text="Exit", command=root.quit)
-btn_exit.grid(row=10, column=1)
+btn_exit.grid(row=15, column=1)
 
 #Images
 img1 = ImageTk.PhotoImage(Image.open("./assets/images/apple_pic.jpg"))
@@ -127,7 +128,38 @@ def pop_mb() -> None:
         return
 
     
-prompt_btn = Button(root, text="Pop the message box", command=pop_mb).grid(row=7, column=1)
+prompt_btn = Button(root, text="Pop the message box", command=pop_mb).grid(row=7, column=0)
+
+#Create new windows
+
+def new_window() -> None:
+    """
+    Implements creating the new window
+    """
+
+    new_window = Toplevel() #creates the new window.
+    Label(new_window, text="This is a new window").grid(row=0, column=0) # creates and adds this label to the new window
+
+nu_window_btn = Button(root, text="Pop a new window", command=new_window).grid(row=7, column=1)
+
+# Upload a file (File upload dialog)
+
+def upload_img():
+    """
+    Implements file upload 
+    """
+
+    root.filename = filedialog.askopenfilename(initialdir="./assets/images/", title="Select a File", filetypes=(("png files", "*.png"), ("jpg files", "*.jpg")))
+    file_uploaded = Label(root, text=root.filename).grid(row=8, column=1, pady=20) #display the location of the uploded image
+
+    new_window1 = Toplevel()
+    uploaded_img = ImageTk.PhotoImage(Image.open(root.filename)) #open the image
+    img_label = Label(new_window1, image=uploaded_img).grid(row=1, column=1) # display the image in a label, in the new window
+    img_label.image = uploaded_img # set the image and have it display for as long as the label widget exists. N/B the image does not display without this line of code, however it throws an exception
+
+
+upload_file_btn = Button(root, text="upload an image", command=upload_img).grid(row=7, column=2)
+
 
 
 root.mainloop()
