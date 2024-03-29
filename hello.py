@@ -153,9 +153,10 @@ def upload_img():
     file_uploaded = Label(root, text=root.filename).grid(row=8, column=1, pady=20) #display the location of the uploded image
 
     new_window1 = Toplevel()
+    global uploaded_img #define the image as a global variable to prevent from being garbage collected.
     uploaded_img = ImageTk.PhotoImage(Image.open(root.filename)) #open the image
     img_label = Label(new_window1, image=uploaded_img).grid(row=1, column=1) # display the image in a label, in the new window
-    img_label.image = uploaded_img # set the image and have it display for as long as the label widget exists. N/B the image does not display without this line of code, however it throws an exception
+    # img_label.image = uploaded_img # set the image and have it display for as long as the label widget exists. N/B the image does not display without this line of code, however it throws an exception
 
 
 upload_file_btn = Button(root, text="upload an image", command=upload_img).grid(row=7, column=2)
