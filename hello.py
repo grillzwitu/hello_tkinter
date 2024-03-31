@@ -161,6 +161,60 @@ def upload_img():
 
 upload_file_btn = Button(root, text="upload an image", command=upload_img).grid(row=7, column=2)
 
+#Sliders
+vertical_slider = Scale(root, from_=0, to=100)
+vertical_slider.grid(row=0, column=15)
 
+horizontal_slider = Scale(root, from_=0, to=100, orient=HORIZONTAL)
+horizontal_slider.grid(row=1, column=15)
+
+#root.geometry(str(horizontal_slider.get()) + "x" + str(vertical_slider.get())) #changes the size of the main window
+
+#Check Boxes
+
+def new_window1() -> None:
+    """
+    Implements creating the new window
+    """
+
+    new_window = Toplevel() #creates the new window.
+    Label(new_window, text="This is a new window").grid(row=0, column=0) # creates and adds this label to the new window
+
+    # creating a frame container for the check bx
+    cont_frame = LabelFrame(new_window, text="Check a box or some boxes",pady=10, padx=10)
+    cont_frame.grid(row=1, column=0, pady=5, padx=5)
+
+    #Defining a variable to store the value for the checkbox
+    check_selection = StringVar()
+
+    #Creating the checkbox
+    check_box1 = Checkbutton(cont_frame, text="check for checking sakes", variable=check_selection, onvalue="Checked", offvalue="Not checked")
+    #check_box1.deselect()
+    check_box1.grid(row=0, column=0)
+
+    global print_selection
+    
+    print_selection = Label(cont_frame, text=check_selection.get()).grid(row=2, column=1)
+
+    def check_selection_value():
+
+        global print_selection
+
+        print_selection = Label(cont_frame, text="").grid(row=2, column=1)
+
+        print_selection = Label(cont_frame, text=check_selection.get()).grid(row=2, column=1)
+
+    check_selection_value_btn = Button(cont_frame, text="What is checked", command=check_selection_value).grid(row=3, column=1)
+
+
+
+nu_window_btn1 = Button(root, text="Pop another new window, try check boxes", command=new_window1).grid(row=9, column=0, pady=10, padx=10)
+
+
+#Define a variable to store the value for the selected box(es)
+
+# check_selection = IntVar()
+
+# check_box1 = Checkbutton(cont_frame, text="check for checking sakes", variable=check_selection).grid(row=0, column=1)
 
 root.mainloop()
