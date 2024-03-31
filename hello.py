@@ -191,16 +191,12 @@ def new_window1() -> None:
     check_box1 = Checkbutton(cont_frame, text="check for checking sakes", variable=check_selection, onvalue="Checked", offvalue="Not checked")
     #check_box1.deselect()
     check_box1.grid(row=0, column=0)
-
-    global print_selection
     
     print_selection = Label(cont_frame, text=check_selection.get()).grid(row=2, column=1)
 
     def check_selection_value():
 
-        global print_selection
-
-        print_selection = Label(cont_frame, text="").grid(row=2, column=1)
+        #print_selection = Label(cont_frame, text="").grid(row=2, column=1)
 
         print_selection = Label(cont_frame, text=check_selection.get()).grid(row=2, column=1)
 
@@ -216,5 +212,7 @@ nu_window_btn1 = Button(root, text="Pop another new window, try check boxes", co
 # check_selection = IntVar()
 
 # check_box1 = Checkbutton(cont_frame, text="check for checking sakes", variable=check_selection).grid(row=0, column=1)
+
+#To Do: Try to clear old value instead of writing over.
 
 root.mainloop()
