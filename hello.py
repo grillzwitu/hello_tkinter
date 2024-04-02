@@ -213,6 +213,12 @@ nu_window_btn1 = Button(root, text="Pop another new window, try check boxes", co
 
 # check_box1 = Checkbutton(cont_frame, text="check for checking sakes", variable=check_selection).grid(row=0, column=1)
 
-#To Do: Try to clear old value instead of writing over.
+#To Do: Try to clear old value instead of displaying over.
+
+#Drop down 
+
+dd_value = StringVar(value="None")
+
+drp_menu = OptionMenu(frame, dd_value, "Rice", "Corn", "Millet", "Groundnut").grid(row=8, column=0)
 
 root.mainloop()
