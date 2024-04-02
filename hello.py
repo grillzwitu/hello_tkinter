@@ -222,17 +222,50 @@ dd_value = StringVar(value="None") # variable to store the selected value from t
 
 drp_menu = OptionMenu(frame, dd_value, "Rice", "Corn", "Millet", "Groundnut").grid(row=8, column=0) # drop-down menu in a frame
 
-#Integrating Databases
+#Integrating Databases (sqlite3)
 
 connct = sqlite3.connect("test.db") #initialize db
 the_cursr = connct.cursor() #create cursor
 
-the_cursr.execute("""CREATE TABLE contacts (
-                  first_name text,
-                  last_name text,
-                  phone_number integer,
-                  zip_code integer
-)""")
+#Creating a table
+
+# the_cursr.execute("""CREATE TABLE contacts (
+#                   first_name text,
+#                   last_name text,
+#                   phone_number integer,
+#                   zip_code integer
+# )""")
+
+
+def toggleDbUI():
+    """Opens a new window for database UI"""
+
+    new_window2 = Toplevel() #new window to for db inputs
+
+    f_name_lbl = Label(new_window2, text="First name").grid(row=0, column=0)
+    first_name = Entry(new_window2, width=30)
+    first_name.insert(0, "First name")
+    first_name.grid(row=0, column=1)
+
+    l_name_lbl = Label(new_window2, text="Last name").grid(row=1, column=0)
+    last_name = Entry(new_window2, width=30)
+    last_name.insert(0, "Last name")
+    last_name.grid(row=1, column=1)
+
+    phone_num_lbl = Label(new_window2, text="Phone number").grid(row=2, column=0)
+    phone_number = Entry(new_window2, width=30)
+    phone_number.insert(0, "Phone number")
+    phone_number.grid(row=2, column=1)
+
+    zp_code_lbl = Label(new_window2, text="Zip Code").grid(row=3, column=0)
+    zip_code = Entry(new_window2, width=30)
+    zip_code.insert(0, "Zip code")
+    zip_code.grid(row=3, column=1)
+
+    submit_btn = Button(new_window2, text="Submit" ).grid(row=4, column=0, pady=10)
+
+
+db_ui_btn = Button(root, text="see db UI", command=toggleDbUI).grid(row=9, column=1)
 
 connct.commit() #commit changes
 connct.close() #close connection
