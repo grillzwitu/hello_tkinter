@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import messagebox
 from tkinter import filedialog
+import sqlite3
 
 # Initializing the app/window/interface.
 root = Tk()
@@ -217,8 +218,23 @@ nu_window_btn1 = Button(root, text="Pop another new window, try check boxes", co
 
 #Drop down 
 
-dd_value = StringVar(value="None")
+dd_value = StringVar(value="None") # variable to store the selected value from the menu options
 
-drp_menu = OptionMenu(frame, dd_value, "Rice", "Corn", "Millet", "Groundnut").grid(row=8, column=0)
+drp_menu = OptionMenu(frame, dd_value, "Rice", "Corn", "Millet", "Groundnut").grid(row=8, column=0) # drop-down menu in a frame
+
+#Integrating Databases
+
+connct = sqlite3.connect("test.db") #initialize db
+the_cursr = connct.cursor() #create cursor
+
+the_cursr.execute("""CREATE TABLE contacts (
+                  first_name text,
+                  last_name text,
+                  phone_number integer,
+                  zip_code integer
+)""")
+
+connct.commit() #commit changes
+connct.close() #close connection
 
 root.mainloop()
