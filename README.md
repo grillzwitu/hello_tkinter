@@ -3,9 +3,9 @@
 A repository demonstrating the use of the python library Tkinter to create GUi interfaces.  
 
 This repository urrntly contains 3 main files:  
- [1] hello.py: An interface & note that show cases the possibles of tkinter.
- [2] calculator.py: A simple adding calculator interface.
- [3] image_viewer.py:A simple image viewer interface.
+ [1] hello.py: An interface & note that show cases the possibles of tkinter.  
+ [2] calculator.py: A simple adding calculator interface.  
+ [3] image_viewer.py:A simple image viewer interface.  
 
 To test projects:  
  - clone this repository.  
