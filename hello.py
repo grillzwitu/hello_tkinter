@@ -229,12 +229,12 @@ the_cursr = connct.cursor() #create cursor
 
 #Creating a table
 
-# the_cursr.execute("""CREATE TABLE contacts (
-#                   first_name text,
-#                   last_name text,
-#                   phone_number integer,
-#                   zip_code integer
-# )""")
+the_cursr.execute("""CREATE TABLE IF NOT EXISTS contacts (
+                  first_name text,
+                  last_name text,
+                  phone_number integer,
+                  zip_code integer
+)""")
 
 
 def toggleDbUI():
@@ -262,12 +262,68 @@ def toggleDbUI():
     zip_code.insert(0, "Zip code")
     zip_code.grid(row=3, column=1)
 
-    submit_btn = Button(new_window2, text="Submit" ).grid(row=4, column=0, pady=10)
+    def submit_action():
+        """Implements the actions of the submit button"""
+
+        connct = sqlite3.connect("test.db") #initialize db
+        the_cursr = connct.cursor() #create cursor
+
+        # insert into the db 
+        the_cursr.execute("""INSERT INTO contacts VALUES (
+                  :first_name,
+                  :last_name,
+                  :phone_number,
+                  :zip_code
+        )""",
+        {
+            "first_name": first_name.get(),
+            "last_name": last_name.get(),
+            "phone_number": phone_number.get(),
+            "zip_code": zip_code.get()
+        }
+        )
+
+        connct.commit() #commit changes on db
+        connct.close() #close connection
+
+        #Clear the input fields
+        first_name.delete(0, END)
+        last_name.delete(0, END)
+        phone_number.delete(0, END)
+        zip_code.delete(0, END)
+
+    def check_db():
+        """Implementts the check db button"""
+
+        connct = sqlite3.connect("test.db") #initialize db
+        the_cursr = connct.cursor() #create cursor
+
+        #select all in the db
+        the_cursr.execute("""SELECT *, oid FROM contacts""")
+        output = the_cursr.fetchall()
+        #print(output)
+
+        #print the db output
+        print_output = ""
+
+        for record in output:
+            print_output += str(record) + "\n"
+
+        show_records = Label(new_window2, text=print_output).grid(row=5, column=0)
+
+
+        connct.commit() #commit changes on db
+        connct.close() #close connection
+
+
+    submit_btn = Button(new_window2, text="Submit", command=submit_action).grid(row=4, column=0, pady=10)
+
+    check_db_btn = Button(new_window2,text="Check DB", command=check_db).grid(row=4, column=1, pady=10)
 
 
 db_ui_btn = Button(root, text="see db UI", command=toggleDbUI).grid(row=9, column=1)
 
-connct.commit() #commit changes
-connct.close() #close connection
+# connct.commit() #commit changes on db
+# connct.close() #close connection
 
 root.mainloop()
