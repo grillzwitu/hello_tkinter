@@ -262,6 +262,7 @@ def toggleDbUI():
     zip_code.insert(0, "Zip code")
     zip_code.grid(row=3, column=1)
 
+
     def submit_action():
         """Implements the actions of the submit button"""
 
@@ -292,6 +293,7 @@ def toggleDbUI():
         phone_number.delete(0, END)
         zip_code.delete(0, END)
 
+
     def check_db():
         """Implementts the check db button"""
 
@@ -309,16 +311,36 @@ def toggleDbUI():
         for record in output:
             print_output += str(record) + "\n"
 
-        show_records = Label(new_window2, text=print_output).grid(row=5, column=0)
+        show_records = Label(new_window2, text=print_output).grid(row=7, column=1)
 
 
         connct.commit() #commit changes on db
         connct.close() #close connection
 
+    
+    def delete_Record():
+        """Deletes a recored from the DB"""
+
+        connct = sqlite3.connect("test.db") #initialize db
+        the_cursr = connct.cursor() #create cursor
+
+        #delete the record using its id/pk
+        the_cursr.execute("""DELETE from contacts WHERE oid = """ + delete_record_id_input.get())
+
+        connct.commit() #commit changes on db
+        connct.close() #close connection
+
+
 
     submit_btn = Button(new_window2, text="Submit", command=submit_action).grid(row=4, column=0, pady=10)
 
     check_db_btn = Button(new_window2,text="Check DB", command=check_db).grid(row=4, column=1, pady=10)
+
+    delete_record_btn = Button(new_window2,text="Delete", command=delete_Record).grid(row=5, column=0, pady=10)
+    
+    delete_record_id_input = Entry(new_window2, width=30)
+    delete_record_id_input.insert(0, "Enter record ID")
+    delete_record_id_input.grid(row=5, column=1)
 
 
 db_ui_btn = Button(root, text="see db UI", command=toggleDbUI).grid(row=9, column=1)
