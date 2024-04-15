@@ -311,7 +311,7 @@ def toggleDbUI():
         for record in output:
             print_output += str(record) + "\n"
 
-        show_records = Label(new_window2, text=print_output).grid(row=7, column=1)
+        show_records = Label(new_window2, text=print_output).grid(row=9, column=1)
 
 
         connct.commit() #commit changes on db
@@ -325,10 +325,88 @@ def toggleDbUI():
         the_cursr = connct.cursor() #create cursor
 
         #delete the record using its id/pk
-        the_cursr.execute("""DELETE from contacts WHERE oid = """ + delete_record_id_input.get())
+        the_cursr.execute("""DELETE from contacts WHERE oid = """ + record_id_input.get())
 
         connct.commit() #commit changes on db
         connct.close() #close connection
+
+
+    def update_Record():
+        """Updates a record in the DB"""
+
+        new_window3 = Toplevel()
+
+        update_f_name_lbl = Label(new_window3, text="First name").grid(row=0, column=0)
+        update_first_name = Entry(new_window3, width=30)
+        update_first_name.insert(0, "First name")
+        update_first_name.grid(row=0, column=1)
+
+        update_l_name_lbl = Label(new_window3, text="Last name").grid(row=1, column=0)
+        update_last_name = Entry(new_window3, width=30)
+        update_last_name.insert(0, "Last name")
+        update_last_name.grid(row=1, column=1)
+
+        update_phone_num_lbl = Label(new_window3, text="Phone number").grid(row=2, column=0)
+        update_phone_number = Entry(new_window3, width=30)
+        update_phone_number.insert(0, "Phone number")
+        update_phone_number.grid(row=2, column=1)
+
+        update_zp_code_lbl = Label(new_window3, text="Zip Code").grid(row=3, column=0)
+        update_zip_code = Entry(new_window3, width=30)
+        update_zip_code.insert(0, "Zip code")
+        update_zip_code.grid(row=3, column=1)
+
+        connct = sqlite3.connect("test.db") #initialize db
+        the_cursr = connct.cursor() #create cursor
+
+        rec_id = record_id_input.get()
+
+        # insert into the db 
+        the_cursr.execute("""SELECT * from contacts WHERE oid = """ + rec_id)
+
+        record = the_cursr.fetchall()
+
+        for data in record:
+            update_first_name.insert(0, data[0])
+            update_last_name.insert(0, data[1])
+            update_phone_number.insert(0, data[2])
+            update_zip_code.insert(0, data[3])
+
+        connct.commit() #commit changes on db
+        connct.close() #close connection
+
+
+
+        def update_action():
+            """Implements the actions of the submit button"""
+
+            connct = sqlite3.connect("test.db") #initialize db
+            the_cursr = connct.cursor() #create cursor
+
+            rec_id = record_id_input.get()
+
+            # insert into the db 
+            # the_cursr.execute("""SELECT * from contacts WHERE oid = """ + rec_id)
+
+            # record = the_cursr.fetchall()
+
+            # for data in record:
+            #     update_first_name.insert(0, data[0])
+            #     update_last_name.insert(0, data[1])
+            #     update_phone_number.insert(0, data[2])
+            #     update_zip_code.insert(0, data[3])
+
+            connct.commit() #commit changes on db
+            connct.close() #close connection
+
+            #Clear the input fields
+            update_first_name.delete(0, END)
+            update_last_name.delete(0, END)
+            update_phone_number.delete(0, END)
+            update_zip_code.delete(0, END)
+
+
+        update_submit_btn = Button(new_window3, text="Save", command=update_action).grid(row=4, column=0, pady=10)
 
 
 
@@ -337,10 +415,12 @@ def toggleDbUI():
     check_db_btn = Button(new_window2,text="Check DB", command=check_db).grid(row=4, column=1, pady=10)
 
     delete_record_btn = Button(new_window2,text="Delete", command=delete_Record).grid(row=5, column=0, pady=10)
+
+    update_record_btn = Button(new_window2,text="Update", command=update_Record).grid(row=6, column=0, pady=10)
     
-    delete_record_id_input = Entry(new_window2, width=30)
-    delete_record_id_input.insert(0, "Enter record ID")
-    delete_record_id_input.grid(row=5, column=1)
+    record_id_input = Entry(new_window2, width=30)
+    record_id_input.insert(0, "Enter record ID")
+    record_id_input.grid(row=5, column=1)
 
 
 db_ui_btn = Button(root, text="see db UI", command=toggleDbUI).grid(row=9, column=1)
