@@ -330,30 +330,79 @@ def toggleDbUI():
         connct.commit() #commit changes on db
         connct.close() #close connection
 
+    def update_action():
+            """Implements the actions of the submit button"""
+
+            connct = sqlite3.connect("test.db") #initialize db
+            the_cursr = connct.cursor() #create cursor
+
+            # update the db record 
+            the_cursr.execute("""UPDATE contacts SET
+                            first_name = :first,
+                            last_name = :last,
+                            phone_number = :phone,
+                            zip_code = :zip
+                              
+                            WHERE oid = :oid""",
+                            {
+                                "first": update_first_name.get(),
+                                "last": update_last_name.get(),
+                                "phone": update_phone_number.get(),
+                                "zip": update_zip_code.get(),
+                                "oid": record_id_input.get()
+
+                            }
+                            )
+
+            # record = the_cursr.fetchall()
+
+            # for data in record:
+            #     update_first_name.insert(0, data[0])
+            #     update_last_name.insert(0, data[1])
+            #     update_phone_number.insert(0, data[2])
+            #     update_zip_code.insert(0, data[3])
+
+            connct.commit() #commit changes on db
+            connct.close() #close connection
+
+            #close the window
+
+            new_window3.destroy()
+
 
     def update_Record():
         """Updates a record in the DB"""
 
+        global new_window3
+
         new_window3 = Toplevel()
+
+        #Create labels and Input
+
+        #Make them global variables 
+        global update_first_name
+        global update_last_name
+        global update_phone_number
+        global update_zip_code
 
         update_f_name_lbl = Label(new_window3, text="First name").grid(row=0, column=0)
         update_first_name = Entry(new_window3, width=30)
-        update_first_name.insert(0, "First name")
+        #update_first_name.insert(0, "First name")
         update_first_name.grid(row=0, column=1)
 
         update_l_name_lbl = Label(new_window3, text="Last name").grid(row=1, column=0)
         update_last_name = Entry(new_window3, width=30)
-        update_last_name.insert(0, "Last name")
+        #update_last_name.insert(0, "Last name")
         update_last_name.grid(row=1, column=1)
 
         update_phone_num_lbl = Label(new_window3, text="Phone number").grid(row=2, column=0)
         update_phone_number = Entry(new_window3, width=30)
-        update_phone_number.insert(0, "Phone number")
+        #update_phone_number.insert(0, "Phone number")
         update_phone_number.grid(row=2, column=1)
 
         update_zp_code_lbl = Label(new_window3, text="Zip Code").grid(row=3, column=0)
         update_zip_code = Entry(new_window3, width=30)
-        update_zip_code.insert(0, "Zip code")
+        #update_zip_code.insert(0, "Zip code")
         update_zip_code.grid(row=3, column=1)
 
         connct = sqlite3.connect("test.db") #initialize db
@@ -374,36 +423,6 @@ def toggleDbUI():
 
         connct.commit() #commit changes on db
         connct.close() #close connection
-
-
-
-        def update_action():
-            """Implements the actions of the submit button"""
-
-            connct = sqlite3.connect("test.db") #initialize db
-            the_cursr = connct.cursor() #create cursor
-
-            rec_id = record_id_input.get()
-
-            # insert into the db 
-            # the_cursr.execute("""SELECT * from contacts WHERE oid = """ + rec_id)
-
-            # record = the_cursr.fetchall()
-
-            # for data in record:
-            #     update_first_name.insert(0, data[0])
-            #     update_last_name.insert(0, data[1])
-            #     update_phone_number.insert(0, data[2])
-            #     update_zip_code.insert(0, data[3])
-
-            connct.commit() #commit changes on db
-            connct.close() #close connection
-
-            #Clear the input fields
-            update_first_name.delete(0, END)
-            update_last_name.delete(0, END)
-            update_phone_number.delete(0, END)
-            update_zip_code.delete(0, END)
 
 
         update_submit_btn = Button(new_window3, text="Save", command=update_action).grid(row=4, column=0, pady=10)

@@ -81,7 +81,7 @@ def previous(img_num) -> None:
     status = Label(window, text="Image " + str(img_num) + " of " + str(len(img_list)), bd=1, relief=SUNKEN, padx=5, anchor=E)
     status.grid(row=3, column=0, columnspan=3, sticky=W+E)
 
-
+# Display buttons in the app.
 back_btn = Button(window, text="<<", padx=15, command= lambda: previous(), state=DISABLED)
 back_btn.grid(row=1, column=0, pady=5)
 
